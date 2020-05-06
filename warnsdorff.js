@@ -7,7 +7,7 @@ class WarnsdorffAlgorithm{
         this.chessBoard = document.createElement('canvas');
         this.chessBoardContext = this.chessBoard.getContext('2d');
         this.chessTiles = [];
-
+        this.sqTileSize = null;
         //Set of Knight Moves
         this.moves = [
             [1, 2],
@@ -29,17 +29,17 @@ class WarnsdorffAlgorithm{
     }
     //Initializing Chess Board
     initChessBoard() {
-        const (rows, cols, chessTiles) = this;
+        const {rows, cols, chessTiles} = this;
         const files = this.files;
         const ranks = this.ranks;
         var tileIndex=0;
-        for(var i=0;i<this.rows;i++) {
+        for(var i=0;i<this.rows;i+=1) {
             chessTiles.push([]);
-            for(var j=0;j<this.cols;j++) {
+            for(var j=0;j<this.cols;j+=1) {
                 chessTiles[i][j] = {
-                    id = tileIndex++,
-                    position = [i, j],
-                    validMoves = [],
+                    id : tileIndex++,
+                    position : [i, j],
+                    validMoves : [],
                     label:'${files[j]}${ranks[i]}',
                     tileColor: j % 2 == i % 2 ? '#02b890' : '#134a3e', 
                 };
@@ -56,13 +56,30 @@ class WarnsdorffAlgorithm{
             const [varMoveX , varMoveY] = move;
             const newPosX = currentPosX + varMoveX;
             const newPosY = currentPosY + varMoveY;
+            
+            //Test 
+            //console.log("MX"+ newPosX);
+            //console.log("MY"+ newPosY);
 
             //Validating Position
             if(newPosX >=0 && newPosX < cols && newPosY >=0 && newPosY < rows) {
                 chessTile.validMoves.push([newPosX, newPosY]);
             }
         });
-    }   
+    }
+
+    
+    renderBoard({sqTileSize, container}) {
+        this.sqTileSize = sqTileSize;
+        const chessBoardWidth = (this.cols + 2) * sqTileSize;
+        const chessBoardHeight = (this.rows + 2) * sqTileSize;
+        Object.assign(this.canvas, {
+            width: chessBoardWidth,
+            height: chessBoardHeight,
+        });
+        container.appendChild(this.chessBoard);
+        //Board Draw Function Here
+    }
 
 
 }
