@@ -1,4 +1,4 @@
-class WarnsdorffAlgorithm{
+class WarnsdorffAlgorithm {
     constructor(rows = 8, cols = 8) {
         this.rows = rows;
         this.cols = cols;
@@ -23,9 +23,14 @@ class WarnsdorffAlgorithm{
         this.files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         this.ranks = [8, 7, 6, 5, 4, 3, 2, 1];
         this.totalNumberOfTiles = this.cols * this.rows;
+
+
+        //Object Bindings
+        this.drawChessBoardBase = this.drawChessBoardBase.bind(this); //Chess Board with two extra white blocks 
         //Initliaze Tiles in the board
         this.initChessBoard();
-    
+
+
     }
     //Initializing Chess Board
     initChessBoard() {
@@ -68,18 +73,37 @@ class WarnsdorffAlgorithm{
         });
     }
 
-    
     renderBoard({sqTileSize, container}) {
         this.sqTileSize = sqTileSize;
         const chessBoardWidth = (this.cols + 2) * sqTileSize;
         const chessBoardHeight = (this.rows + 2) * sqTileSize;
-        Object.assign(this.canvas, {
+        Object.assign(this.chessBoard, {
             width: chessBoardWidth,
             height: chessBoardHeight,
         });
         container.appendChild(this.chessBoard);
         //Board Draw Function Here
+        this.drawChessBoard();
     }
 
+    drawChessBoard() {
+        const { sqTileSize, chessTiles, rows, cols, drawChessBoardBase } = this;
+        const chessBoardBaseX = cols + 2;  //Extra 2 for Margin
+        const chessBoardBaseY = rows + 2;
 
+        this.drawChessBoardBase(0, 0, chessBoardBaseX * sqTileSize, chessBoardBaseY * sqTileSize);
+
+        for(var i =0;i<=this.cols;i++) {
+            const offsetCols = i * sqTileSize;
+            if(i > 1 && i < chessBoardBaseX) {
+                
+            }
+        }
+    }
+
+    drawChessBoardBase(x, y, width, height) {
+        const { chessBoardContext } = this;
+        chessBoardContext.fillStyle = '#FF5733';
+        chessBoardContext.fillRect(x, y, width, height);
+    }
 }
