@@ -91,7 +91,7 @@ class WarnsdorffAlgorithm {
         const chessBoardBaseX = cols + 2;  //Extra 2 for Margin
         const chessBoardBaseY = rows + 2;
 
-        this.drawChessBoardBase(0, 0, chessBoardBaseX * sqTileSize, chessBoardBaseY * sqTileSize, '#FF5733');
+        this.drawChessBoardBase(0, 0, chessBoardBaseX * sqTileSize, chessBoardBaseY * sqTileSize, '#FFFFFF');
 
         for(var i =0;i<=cols + 1;i++) {
             const offsetCols = i * sqTileSize;
@@ -119,6 +119,7 @@ class WarnsdorffAlgorithm {
         const { chessBoardContext } = this;
         chessBoardContext.fillStyle = color;
         chessBoardContext.fillRect(x, y, width, height);
+        
     }
     
     drawText(value, x, y, font = '16px sans-serif') {
@@ -128,6 +129,7 @@ class WarnsdorffAlgorithm {
         chessBoardContext.textBaseline = 'middle';
         chessBoardContext.fillStyle = '#000';
         chessBoardContext.fillText(value, x, y);
+        
     }
 
     drawChessBoardLabel(type, center, offset, count) {

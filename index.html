@@ -1,13 +1,15 @@
 <html>
 <head>
 <body>
-    <div id="container"></div>
+    <center>
+        <div id="container"></div>
+    </center>
     <script src ='warnsdorff.js'></script>
     <script>
         // run tour
         const tour = new WarnsdorffAlgorithm();
         tour.renderBoard({
-            sqTileSize: 40,
+            sqTileSize: 65,
             container: document.getElementById('container'),
         });
     </script>
