@@ -106,9 +106,7 @@ class WarnsdorffAlgorithm {
                 this.drawChessBoardLabel('rank', sqTileSize / 2 , offsetRows, j);
             }
         }
-        chessTiles.map(row=>row.map( col => {
-            const offsetX = sqTileSize + (col.position);
-        }));
+        
     }
 
     drawChessBoardBase(x, y, width, height) {
@@ -117,6 +115,8 @@ class WarnsdorffAlgorithm {
         chessBoardContext.fillRect(x, y, width, height);
     }
 
+    
+    
     drawText(value, x, y, font = '16px sans-serif') {
         const { chessBoardContext } = this;
         chessBoardContext.font = font;
