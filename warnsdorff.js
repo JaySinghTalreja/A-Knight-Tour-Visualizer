@@ -7,6 +7,7 @@ class WarnsdorffAlgorithm {
         this.chessBoard = document.createElement('canvas');
         this.chessBoardContext = this.chessBoard.getContext('2d');
         this.chessTiles = [];
+        this.chessTour = [];
         this.sqTileSize = null;
         //Set of Knight Moves
         this.moves = [
@@ -23,13 +24,33 @@ class WarnsdorffAlgorithm {
         this.files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
         this.ranks = [8, 7, 6, 5, 4, 3, 2, 1];
         this.totalNumberOfTiles = this.cols * this.rows;
-
+        
 
         //Object Bindings
         this.drawChessBoardBase = this.drawChessBoardBase.bind(this); //Chess Board with two extra white blocks 
+        this.toggleWarnsdorff = this.toggleWarnsdorff.bind(this); //Toggle Binding
         //Initliaze Tiles in the board
         this.initChessBoard();
-        this.chessBoard.addEventListener('click', toggleWarnsdorff); //Function Needed to be added
+        this.chessBoard.addEventListener('click', this.toggleWarnsdorff); //Function Needed to be added
+
+    }
+
+
+    toggleWarnsdorff(event) {
+        const {sqTileSize, rows, cols, chessTiles, chessTour, totalNumberOfTiles } = this;
+        const offsetX = event.target.offsetLeft + sqTileSize;
+        const offsetY = event.target.offsetTop + sqTileSize;
+        //console.log("OffsetX :"+offsetX+" OffsetY"+offsetY);  //Did Binding the reproduce the issue
+        //const x = 
+        const xCord = event.clientX - offsetX;
+        const yCord = event.clientY - offsetY;
+        //console.log("XCORD:"+xCord+"YCORD"+yCord);
+        const width = cols * sqTileSize;
+        const height = rows * sqTileSize;
+        if(xCord >= 0 && xCord<width && yCord>=0 && yCord< height) {
+            var tileLabel;
+            
+        }
 
     }
 
@@ -158,12 +179,12 @@ class WarnsdorffAlgorithm {
         if(type === 'File') {
             this.drawText(file, align, center);
             this.drawText(file, align, bottom);
-            console.log("Align , Bottom & Center:"+align+" "+bottom+" "+center);
+            //console.log("Align , Bottom & Center:"+align+" "+bottom+" "+center);
         } 
         else if(type === 'rank') {
             this.drawText(rank, center, align);
             this.drawText(rank, right, align);
-            console.log("Align , right & Center:"+align+" "+right+" "+center);
+            //console.log("Align , right & Center:"+align+" "+right+" "+center);
         }
     }
 }
