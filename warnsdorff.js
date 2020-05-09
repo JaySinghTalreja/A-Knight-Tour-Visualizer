@@ -25,6 +25,8 @@ class WarnsdorffAlgorithm {
         this.ranks = [8, 7, 6, 5, 4, 3, 2, 1];
         this.totalNumberOfTiles = this.cols * this.rows;
         
+        //Tour Settings
+        this.running = false;
 
         //Object Bindings
         this.drawChessBoardBase = this.drawChessBoardBase.bind(this); //Chess Board with two extra white blocks 
@@ -52,12 +54,15 @@ class WarnsdorffAlgorithm {
             chessTiles.map(row => row.filter(col => {
                 const [px, py] = col.position;
                 const cx = px * sqTileSize;
-                const xy = px * sqTileSize;
+                const cy = px * sqTileSize;
                 if(xCord >= cx && xCord < cx + sqTileSize && y >= cy && y < cy + sqTileSize) {
                     tileLabel = col.label;
                 }
             }));
             if(chessTour.length === totalNumberOfTiles) {
+                this.resetTour();
+            }
+            else {
                 
             }
             
@@ -65,6 +70,18 @@ class WarnsdorffAlgorithm {
 
     }
 
+    startTour() {
+        this.running = true;
+        //Left here
+    }
+
+    stopTour() {
+        
+    }
+
+    resetTour() {
+        this.stopTour();
+    }
 
     //Initializing Chess Board
     initChessBoard() {
