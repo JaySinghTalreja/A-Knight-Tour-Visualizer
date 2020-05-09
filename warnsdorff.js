@@ -49,6 +49,17 @@ class WarnsdorffAlgorithm {
         const height = rows * sqTileSize;
         if(xCord >= 0 && xCord<width && yCord>=0 && yCord< height) {
             var tileLabel;
+            chessTiles.map(row => row.filter(col => {
+                const [px, py] = col.position;
+                const cx = px * sqTileSize;
+                const xy = px * sqTileSize;
+                if(xCord >= cx && xCord < cx + sqTileSize && y >= cy && y < cy + sqTileSize) {
+                    tileLabel = col.label;
+                }
+            }));
+            if(chessTour.length === totalNumberOfTiles) {
+                
+            }
             
         }
 
