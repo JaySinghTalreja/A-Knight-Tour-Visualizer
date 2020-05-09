@@ -25,12 +25,19 @@ class WarnsdorffAlgorithm {
         this.ranks = [8, 7, 6, 5, 4, 3, 2, 1];
         this.totalNumberOfTiles = this.cols * this.rows;
         
+        
         //Tour Settings
         this.running = false;
+        this.animTour=[];
+        this.animPoints=[];
+        this.animCount = 0;
+        this.time = Date.now();
 
         //Object Bindings
         this.drawChessBoardBase = this.drawChessBoardBase.bind(this); //Chess Board with two extra white blocks 
         this.toggleWarnsdorff = this.toggleWarnsdorff.bind(this); //Toggle Binding
+        this.stopTour = this.stopTour.bind(this);
+        this.draw = this.draw.bind(this);
         //Initliaze Tiles in the board
         this.initChessBoard();
         this.chessBoard.addEventListener('click', this.toggleWarnsdorff); //Function Needed to be added
@@ -73,14 +80,37 @@ class WarnsdorffAlgorithm {
     startTour() {
         this.running = true;
         //Left here
+        this.draw();
     }
 
     stopTour() {
-        
+        this.running = false;
+        //Left Here
     }
 
     resetTour() {
         this.stopTour();
+    }
+
+    draw() {
+        const {running, draw, totalNumberOfTiles, chessBoard, chessBoardContext, chessTour, animTour, animPoints } = this;
+        requestAnimationFrame(draw);
+        if(!running) {
+            return;
+        }
+        const dateNow = Date.now();
+        const delta = now - this.time;
+        const interval = 1000 / 60;
+        
+        if(delta > interval) {
+            this.time = dateNow - (delta % interval);
+            chessBoardContext.clearRect(0, 0, chessBoard.width, chessBoard.height);
+            this.drawChessBoard();
+            if( this.animCount < chessTour.length ) {
+                
+            } 
+        }
+
     }
 
     //Initializing Chess Board
