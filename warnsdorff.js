@@ -32,12 +32,15 @@ class WarnsdorffAlgorithm {
         this.animPoints=[];
         this.animCount = 0;
         this.time = Date.now();
+        this.increment = 0;
 
         //Object Bindings
         this.drawChessBoardBase = this.drawChessBoardBase.bind(this); //Chess Board with two extra white blocks 
         this.toggleWarnsdorff = this.toggleWarnsdorff.bind(this); //Toggle Binding
         this.stopTour = this.stopTour.bind(this);
         this.draw = this.draw.bind(this);
+        this.drawPoints = this.drawPoints.bind(this);
+
         //Initliaze Tiles in the board
         this.initChessBoard();
         this.chessBoard.addEventListener('click', this.toggleWarnsdorff); //Function Needed to be added
@@ -107,7 +110,35 @@ class WarnsdorffAlgorithm {
             chessBoardContext.clearRect(0, 0, chessBoard.width, chessBoard.height);
             this.drawChessBoard();
             if( this.animCount < chessTour.length ) {
-                
+                const [startX, startY] = chessTour[this.animCount];
+                const [endX, endY] = chessTour[this.animCount + 1] ? chessTour[this.animCount + 1] : chessTour[this.animCount];
+                if(this.increment === 0 && this.animCount === 0) {
+                    animPoints.push(chessTour[this.animCount]);
+                }
+                this.increment += 0.05;
+                animTour.push([
+                    startX + ((endX - startX) * this.increment),
+                    startY + ((endY - startY) * this.increment),
+                ]);
+                this.drawPoints(animPoints);            //To Be Written
+                this.drawPath(animTour);                //To Be Written
+                this.moveKnight([
+                    startX + ((endX - startX) * this.increment);
+                    startY + ((endY - startY) * this.increment);
+                ]);
+                if(this.increment > 1) {
+                    this.increment = 0;
+                    this.animCount += 1;
+                    if(this.animCount !== total) {
+                        animPoints.push(chessTour[this.animCount]);
+                    }
+                }
+                else {
+                    this.drawPoints(animPoints);
+                    this.drawPath(animTour);
+                    this.moveKnight(chessTour[this.animCount -1]);
+                    this.stopTour();
+                }
             } 
         }
 
