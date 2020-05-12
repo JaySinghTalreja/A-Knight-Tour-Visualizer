@@ -39,7 +39,7 @@ class WarnsdorffAlgorithm {
         this.toggleWarnsdorff = this.toggleWarnsdorff.bind(this); //Toggle Binding
         this.stopTour = this.stopTour.bind(this);
         this.draw = this.draw.bind(this);
-        this.drawPoints = this.drawPoints.bind(this);
+        //this.drawPoints = this.drawPoints.bind(this);
 
         //Initliaze Tiles in the board
         this.initChessBoard();
@@ -65,19 +65,26 @@ class WarnsdorffAlgorithm {
                 const [px, py] = col.position;
                 const cx = px * sqTileSize;
                 const cy = px * sqTileSize;
-                if(xCord >= cx && xCord < cx + sqTileSize && y >= cy && y < cy + sqTileSize) {
+                if(xCord >= cx && xCord < cx + sqTileSize && yCord >= cy && yCord < cy + sqTileSize) {
                     tileLabel = col.label;
                 }
             }));
             if(chessTour.length === totalNumberOfTiles) {
                 this.resetTour();
             }
-            else {
-                
+            else{
+                this.initSquare(tileLabel);
+                this.startTour();
+                //To Be Written Here
             }
             
         }
 
+    }
+
+    initSquare(tileLabel) {
+        const knightInitialPosition = this.transformLabel(tileLabel);
+        //To Be Done
     }
 
     startTour() {
@@ -123,8 +130,8 @@ class WarnsdorffAlgorithm {
                 this.drawPoints(animPoints);            //To Be Written
                 this.drawPath(animTour);                //To Be Written
                 this.moveKnight([
-                    startX + ((endX - startX) * this.increment);
-                    startY + ((endY - startY) * this.increment);
+                    startX + ((endX - startX) * this.increment),
+                    startY + ((endY - startY) * this.increment),
                 ]);
                 if(this.increment > 1) {
                     this.increment = 0;
