@@ -88,7 +88,8 @@ class WarnsdorffAlgorithm {
 
     }
 
-    transformLabel(tileLabel){
+
+    transformLabel(tileLabel) {
         const file = tileLabel.substr(0, 1);
         const rank = tileLabel.substring(1);
         //console.log("DM"+file+" "+rank);
@@ -99,7 +100,12 @@ class WarnsdorffAlgorithm {
         const x = files.indexOf(file);
         const y = ranks.indexOf(parseInt(rank, 10));
         console.log(x, y);
+        if(x < 0 || y < 0 || square.length !== 2) {
+            throw new Error(`${label} , Apparently not a valid tile`);
+        }
+        return [x, y];
     }
+
 
     startTour() {
         this.running = true;
@@ -186,10 +192,10 @@ class WarnsdorffAlgorithm {
             chessTiles.push([]);
             for(var j=0;j<this.cols;j+=1) {
                 chessTiles[i][j] = {
-                    id : tileIndex++,
-                    position : [i, j],
+                    id : tileIndex += 1,
+                    position : [j, i],
                     validMoves : [],
-                    label:'${files[j]}${ranks[i]}',
+                    label:`${files[j]}${ranks[i]}`,
                     tileColor: j % 2 == i % 2 ? '#02b890' : '#134a3e', 
                 };
                 this.setValidMoves(chessTiles[i][j]);
