@@ -59,12 +59,12 @@ class WarnsdorffAlgorithm {
         //console.log("XCORD:"+xCord+"YCORD"+yCord);
         const width = cols * sqTileSize;
         const height = rows * sqTileSize;
-        if(xCord >= 0 && xCord<width && yCord>=0 && yCord< height) {
+        if(xCord >= 0 && xCord < width && yCord>=0 && yCord < height) {
             var tileLabel;
             chessTiles.map(row => row.filter(col => {
                 const [px, py] = col.position;
                 const cx = px * sqTileSize;
-                const cy = px * sqTileSize;
+                const cy = py * sqTileSize;
                 if(xCord >= cx && xCord < cx + sqTileSize && yCord >= cy && yCord < cy + sqTileSize) {
                     tileLabel = col.label;
                 }
@@ -85,6 +85,20 @@ class WarnsdorffAlgorithm {
     initSquare(tileLabel) {
         const knightInitialPosition = this.transformLabel(tileLabel);
         //To Be Done
+
+    }
+
+    transformLabel(tileLabel){
+        const file = tileLabel.substr(0, 1);
+        const rank = tileLabel.substring(1);
+        //console.log("DM"+file+" "+rank);
+        const square = [file, rank];
+        //console.log(square);
+        const files = this.files.slice(0, this.cols);
+        const ranks = this.ranks.slice(this.ranks.length - this.rows);
+        const x = files.indexOf(file);
+        const y = ranks.indexOf(parseInt(rank, 10));
+        console.log(x, y);
     }
 
     startTour() {
@@ -100,6 +114,17 @@ class WarnsdorffAlgorithm {
 
     resetTour() {
         this.stopTour();
+        this.chessTiles = [];
+        this.chessTour = [];
+        this.animTour = [];
+        this.animPoints = [];
+        this.time = Date.now();
+        this.increment =0;
+        this.animCount = 0;
+        //To Be Done here
+        this.initChessBoard();
+        this.chessBoardContext.clearRect(0 ,0, this.chessBoard.width, this.chessBoard.height);
+        this.drawChessBoard();
     }
 
     draw() {
@@ -109,7 +134,7 @@ class WarnsdorffAlgorithm {
             return;
         }
         const dateNow = Date.now();
-        const delta = now - this.time;
+        const delta = dateNow - this.time;
         const interval = 1000 / 60;
         
         if(delta > interval) {
