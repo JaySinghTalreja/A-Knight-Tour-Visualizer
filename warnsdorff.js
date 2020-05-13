@@ -39,6 +39,10 @@ class WarnsdorffAlgorithm {
         this.toggleWarnsdorff = this.toggleWarnsdorff.bind(this); //Toggle Binding
         this.stopTour = this.stopTour.bind(this);
         this.draw = this.draw.bind(this);
+        this.filterSquare = this.filterSquare.bind(this);
+        this.transformLabel = this.transformLabel.bind(this);
+        this.goOnTour = this.goOnTour.bind(this);
+        this.filterSquare = this.filterSquare.bind(this);
         //this.drawPoints = this.drawPoints.bind(this);
 
         //Initliaze Tiles in the board
@@ -82,9 +86,34 @@ class WarnsdorffAlgorithm {
 
     }
 
+    goOnTour(knightInitialPosition) {
+        const {chessTiles, chessTour, totalNumberOfTiles, filterSquare, goOnTour} = this;
+        const startTile = chessTiles[knightInitialPosition[1]][knightInitialPosition[0]];
+        const nextSquares = [];
+        const nextMoves = [];
+        let nextSquares;
+
+        startTile.moves.map(move => {
+            nextSquare = chessTiles[move[1]][move[0]];
+            nextSquares.push(nextSquare);
+            nextMoves.push(nextSquare.moves.length);
+            return false;
+        });
+
+        nextSquares.filter(next => {
+            if(next.moves.length === Math.min()) {
+                nextSquare = next;
+            }
+            return false;
+        });
+
+    }
+
     initSquare(tileLabel) {
         const knightInitialPosition = this.transformLabel(tileLabel);
         //To Be Done
+        this.goOnTour(knightInitialPosition);
+        return this;
 
     }
 
@@ -115,6 +144,7 @@ class WarnsdorffAlgorithm {
 
     stopTour() {
         this.running = false;
+        cancelAnimationFrame(this.draw);
         //Left Here
     }
 
