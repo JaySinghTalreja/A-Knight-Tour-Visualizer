@@ -181,6 +181,31 @@ class WarnsdorffAlgorithm {
         this.drawChessBoard();
     }
 
+    drawPoints(points) {
+        const { sqTileSize, drawChessBoardBase } = this;
+        const [startX, startY] = points;
+        const color = 'rgba(120, 120, 244, 0.4)';
+        if(points.length) {
+           drawChessBoardBase(
+            sqTileSize + (startX * sqTileSize),
+            sqTileSize + (startY * sqTileSize),
+            sqTileSize,
+            sqTileSize,
+            sqTileSize,
+            color);
+           points.map(point => {
+               const [x, y] = point;
+               return drawChessBoardBase(
+                   sqTileSize + (x * sqTileSize),
+                   sqTileSize + (y * sqTileSize),
+                   sqTileSize,
+                   sqTileSize,
+                   sqTileSize,
+                   color);
+           });
+        }
+    }
+
     draw() {
         const {running, draw, totalNumberOfTiles, chessBoard, chessBoardContext, chessTour, animTour, animPoints } = this;
         requestAnimationFrame(draw);
@@ -215,7 +240,7 @@ class WarnsdorffAlgorithm {
                 if(this.increment > 1) {
                     this.increment = 0;
                     this.animCount += 1;
-                    if(this.animCount !== total) {
+                    if(this.animCount !== totalNumberOfTiles) {
                         animPoints.push(chessTour[this.animCount]);
                     }
                 }
