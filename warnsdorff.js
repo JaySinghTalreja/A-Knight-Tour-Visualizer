@@ -85,6 +85,17 @@ class WarnsdorffAlgorithm {
         }
 
     }
+    ((
+    filterSquare(square) {
+        this.chessTiles.map(row => rom.map(col =>
+            col.moves.filter(move, i) => {
+                if(move[0] === square[0] && move[1] === square[1]) {
+                    col.moves.splice(i, 1);
+                }
+            }
+            return false;
+        ));
+    }
 
     goOnTour(knightInitialPosition) {
         const {chessTiles, chessTour, totalNumberOfTiles, filterSquare, goOnTour} = this;
@@ -107,6 +118,8 @@ class WarnsdorffAlgorithm {
             return false;
         });
 
+        filterSquare(knightInitialPosition);
+        
     }
 
     initSquare(tileLabel) {
