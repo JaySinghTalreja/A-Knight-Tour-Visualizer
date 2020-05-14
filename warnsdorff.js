@@ -12,13 +12,13 @@ class WarnsdorffAlgorithm {
         //Set of Knight Moves
         this.moves = [
             [1, 2],
-            [1, -2],
             [2, 1],
+            [1, -2],
             [2, -1],
             [-1, 2],
-            [-1, -2],
             [-2, 1],
-            [-2, -2],
+            [-1, -2],
+            [-2, -1],
         ];
 
         this.files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -85,16 +85,14 @@ class WarnsdorffAlgorithm {
         }
 
     }
-    ((
     filterSquare(square) {
-        this.chessTiles.map(row => rom.map(col =>
-            col.moves.filter(move, i) => {
+        this.chessTiles.map(row => row.map(col =>
+            col.validMoves.filter((move, i) => {
                 if(move[0] === square[0] && move[1] === square[1]) {
-                    col.moves.splice(i, 1);
+                    col.validMoves.splice(i, 1);
                 }
-            }
             return false;
-        ));
+        })));
     }
 
     goOnTour(knightInitialPosition) {
@@ -102,24 +100,31 @@ class WarnsdorffAlgorithm {
         const startTile = chessTiles[knightInitialPosition[1]][knightInitialPosition[0]];
         const nextSquares = [];
         const nextMoves = [];
-        let nextSquares;
+        let nextSquare;
 
-        startTile.moves.map(move => {
+        startTile.validMoves.map(move => {
             nextSquare = chessTiles[move[1]][move[0]];
+            //console.log("Next Square:"+nextSquare);
             nextSquares.push(nextSquare);
-            nextMoves.push(nextSquare.moves.length);
+            //console.log("NS:"+nextSquare.validMoves);
+            nextMoves.push(nextSquare.validMoves.length);
             return false;
         });
 
         nextSquares.filter(next => {
-            if(next.moves.length === Math.min()) {
+            if(next.validMoves.length === Math.min(...nextMoves)) {
                 nextSquare = next;
             }
             return false;
         });
 
         filterSquare(knightInitialPosition);
-        
+        chessTour.push(startTile.position);
+        if(chessTour.length === totalNumberOfTiles) {
+            return;
+        }
+        console.log("FINAL:"+nextSquare.position);
+        goOnTour(nextSquare.position);
     }
 
     initSquare(tileLabel) {
@@ -250,7 +255,7 @@ class WarnsdorffAlgorithm {
     setValidMoves(chessTile) {
         const {rows, cols, moves} = this;
         const [currentPosX, currentPosY] = chessTile.position;
-        moves.filter(move => {
+        return moves.filter(move => {
             const [varMoveX , varMoveY] = move;
             const newPosX = currentPosX + varMoveX;
             const newPosY = currentPosY + varMoveY;
@@ -263,6 +268,7 @@ class WarnsdorffAlgorithm {
             if(newPosX >=0 && newPosX < cols && newPosY >=0 && newPosY < rows) {
                 chessTile.validMoves.push([newPosX, newPosY]);
             }
+            return this;
         });
     }
 
