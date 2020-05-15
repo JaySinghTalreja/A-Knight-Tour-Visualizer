@@ -43,7 +43,11 @@ class WarnsdorffAlgorithm {
         this.transformLabel = this.transformLabel.bind(this);
         this.goOnTour = this.goOnTour.bind(this);
         this.filterSquare = this.filterSquare.bind(this);
-        //this.drawPoints = this.drawPoints.bind(this);
+        this.drawPoints = this.drawPoints.bind(this);
+        this.moveKnight = this.moveKnight.bind(this);
+        this.drawText = this.drawText.bind(this);
+        this.renderBoard = this.renderBoard.bind(this);
+
 
         //Initliaze Tiles in the board
         this.initChessBoard();
@@ -72,6 +76,7 @@ class WarnsdorffAlgorithm {
                 if(xCord >= cx && xCord < cx + sqTileSize && yCord >= cy && yCord < cy + sqTileSize) {
                     tileLabel = col.label;
                 }
+                return false
             }));
             if(chessTour.length === totalNumberOfTiles) {
                 this.resetTour();
@@ -228,9 +233,10 @@ class WarnsdorffAlgorithm {
         chessBoardContext.stroke();
     }
 
-    moveKnight(position) {
+    moveKnight(pos) {
         const {sqTileSize, drawText} = this;
-        const [x, y] = position;
+        //console.log("POS:"+pos);
+        const [x, y] = pos;
         drawText(
             '♞',
             sqTileSize + ((x + 0.5) * sqTileSize),
@@ -239,7 +245,7 @@ class WarnsdorffAlgorithm {
         );
     }
 
-    draw() {
+    async draw() {
         const {running, draw, totalNumberOfTiles, chessBoard, chessBoardContext, chessTour, animTour, animPoints } = this;
         requestAnimationFrame(draw);
         if(!running) {
@@ -266,6 +272,11 @@ class WarnsdorffAlgorithm {
                 ]);
                 this.drawPoints(animPoints);            //To Be Written
                 this.drawPath(animTour);                //To Be Written
+                //console.log("One");
+                //const xFF = startX + ((endX - startX) * this.increment);
+                //const yFF = startY + ((endY - startY) * this.increment);
+                //console.log("X:"+ xFF);
+                //console.log("Y:"+ yFF);
                 this.moveKnight([
                     startX + ((endX - startX) * this.increment),
                     startY + ((endY - startY) * this.increment),
@@ -280,7 +291,7 @@ class WarnsdorffAlgorithm {
                 else {
                     this.drawPoints(animPoints);
                     this.drawPath(animTour);
-                    this.moveKnight(chessTour[this.animCount -1]);
+                    this.moveKnight(chessTour[this.animCount - 1]);
                     this.stopTour();
                 }
             } 
