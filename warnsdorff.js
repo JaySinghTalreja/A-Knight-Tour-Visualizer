@@ -206,6 +206,39 @@ class WarnsdorffAlgorithm {
         }
     }
 
+    drawPath(path) {
+        const {chessBoardContext, sqTileSize, animTour } = this;
+        const[x, y] = animTour[0];
+        const origin = sqTileSize / 2;
+        const oX = sqTileSize + (x * origin);
+        const oY = sqTileSize + (y * origin);
+
+        chessBoardContext.moveTo(oX, oY);
+        chessBoardContext.beginPath();
+        chessBoardContext.strokeStyle = '#5a72be';
+        chessBoardContext.lineWidth = 2;
+        chessBoardContext.lineCap = 'round';
+        chessBoardContext.lineJoin = 'rount';
+        path.map(point => {
+            const [px, py] = point;
+            const start = sqTileSize + (px * sqTileSize);
+            const end = sqTileSize + (py * sqTileSize);
+            return chessBoardContext.lineTo(start + origin, end+origin);
+        });
+        chessBoardContext.stroke();
+    }
+
+    moveKnight(position) {
+        const {sqTileSize, drawText} = this;
+        const [x, y] = position;
+        drawText(
+            '♞',
+            sqTileSize + ((x + 0.5) * sqTileSize),
+            sqTileSize + ((y + 0.5) * sqTileSize),
+            '36px sans-serif'
+        );
+    }
+
     draw() {
         const {running, draw, totalNumberOfTiles, chessBoard, chessBoardContext, chessTour, animTour, animPoints } = this;
         requestAnimationFrame(draw);
@@ -254,6 +287,10 @@ class WarnsdorffAlgorithm {
         }
 
     }
+
+
+
+
 
     //Initializing Chess Board
     initChessBoard() {
@@ -351,9 +388,9 @@ class WarnsdorffAlgorithm {
         
     }
     
-    drawText(value, x, y) {
-        const { chessBoardContext } = this;
-        const font = '16px sans-serif'
+    drawText(value, x, y,font = '16px sans-serif') {
+        const {chessBoardContext} = this;
+        //const font = '16px sans-serif'
         chessBoardContext.font = font;
         chessBoardContext.textAlign = 'center';
         chessBoardContext.textBaseline = 'middle';
@@ -377,14 +414,15 @@ class WarnsdorffAlgorithm {
         const align = offset - center;
         const file = files[count - 2];
         const rank = ranks[count - 2];
+        const font = '16px sans-serif';
         if(type === 'File') {
-            this.drawText(file, align, center);
-            this.drawText(file, align, bottom);
+            this.drawText(file, align, center, font);
+            this.drawText(file, align, bottom, font);
             //console.log("Align , Bottom & Center:"+align+" "+bottom+" "+center);
         } 
         else if(type === 'rank') {
-            this.drawText(rank, center, align);
-            this.drawText(rank, right, align);
+            this.drawText(rank, center, align, font);
+            this.drawText(rank, right, align, font);
             //console.log("Align , right & Center:"+align+" "+right+" "+center);
         }
     }
