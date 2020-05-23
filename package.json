@@ -1,23 +1,15 @@
 {
-  "name": "warnsdorff-algorithm-visualizer",
+  "name": "canvas-knights-tour",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Canvas interactive animated knights tour.",
+  "main": "knights-tour.js",
   "scripts": {
-    "start": "node initserver.js"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JaySinghTalreja/Warnsdorff-Algorithm-Visualizer.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JaySinghTalreja/Warnsdorff-Algorithm-Visualizer/issues"
-  },
-  "homepage": "https://github.com/JaySinghTalreja/Warnsdorff-Algorithm-Visualizer#readme",
+  "author": "Adam Deschamp",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "express": "^4.14.1",
+    "morgan": "^1.8.1"
   }
 }

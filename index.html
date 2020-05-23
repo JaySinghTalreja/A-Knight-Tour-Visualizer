@@ -1,18 +1,17 @@
+<!DOCTYPE html>
 <html>
 <head>
-<body>
-    <center>
-        <div id="container"></div>
-    </center>
-    <script src ='warnsdorff.js'></script>
-    <script>
-        // run tour
-        const tour = new WarnsdorffAlgorithm();
-        tour.renderBoard({
-            sqTileSize: 65,
-            container: document.getElementById('container'),
-        });
-    </script>
-</body>
+  <title>A Knight's Tour Visualization</title>
 </head>
+<body>
+  <center><div id="container"></div></center>
+  <script src="knights-tour.js"></script>
+  <script>
+    const tour = new KnightsTour();
+    tour.render({
+      sqSize: 65,
+      container: document.getElementById('container'),
+    });
+  </script>
+</body>
 </html>
