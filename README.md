@@ -15,8 +15,10 @@ Within terminal cd to the project directory PATH/A-Knight-Tour-Visualizer and do
 $ npm install
 Once Done,
 $ npm start
-Then Go to http://localhost:3030 in your browser.
+Then Go to http://localhost:3030 in your browser.Kn
 ```
 ## Want to Contribute 
-Any new contributor is welcome to help me improve the project :smile:.Any bugs :bug:  or perhaps some changes would be nice.
+Any new contributor is welcome to help me improve the project :smile:.Any bugs :bug:  or perhaps some changes would be appreciared.
+Or if you have already break a sweat :smirk: , Just make a pull request :thumbsup:.
+.
 
